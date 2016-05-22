@@ -19,15 +19,13 @@ libmammut_stubs.so : mammut_stubs.cpp
 	g++ $(CXXFLAGS)  mammut_stubs.cpp -o $@
 
 test.asm: test.ml mammut.cmxa
-	ocamlfind ocamlopt -package ctypes.foreign -linkpkg \
-	-cclib -lmammut_stubs -thread -cclib -lstdc++ -cclib -lmammut \
-	mammut.cmxa test.ml -o $@
+	ocamlfind ocamlopt  -package ctypes.foreign mammut.cmxa -cclib libmammut_stubs.so -cclib -lmammut -cclib -lstdc++ -linkpkg  -thread  -o test test.ml
+	sudo LD_LIBRARY_PATH=. ./test
+
+install_test :
+	ocamlfind ocamlopt   -package ctypes.foreign,mammut -cclib `ocamlfind query mammut`/libmammut_stubs.so -linkpkg  -thread  -o test test.ml
 
 
-test.byte: test.ml mammut.cma
-	ocamlfind ocamlc -package ctypes.foreign -linkpkg \
-	-cclib -lmammut_stubs -thread -cclib -lstdc++ -cclib -lmammut \
-	mammut.cma test.ml -o $@
 
 install: mammut.cmxa mammut.cma mammut.cmi libmammut_stubs.so
 	ocamlfind install mammut *.cma *.a *.cmxa *.cmi META -nodll *.so
