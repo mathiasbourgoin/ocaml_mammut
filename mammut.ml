@@ -17,7 +17,10 @@ module Binding = struct
       
   let create_Mammut =
     foreign "create_Mammut" (void @-> returning (ptr mammut))
+  let destroy_Mammut =
+    foreign "destroy_Mammut" ((ptr mammut) @-> returning void)
       
+  
   let mammut_getInstanceEnergy =
     foreign "getInstanceEnergy" (ptr mammut @-> returning (ptr energy))
 
@@ -27,6 +30,8 @@ module Binding = struct
 
   let counter_reset =
     foreign "reset" (ptr counter @-> returning void)
+  let counter_init =
+    foreign "init" (ptr counter @-> returning void)
   let counter_get_Joules =
     foreign "getJoules" (ptr counter @-> returning double)
   
@@ -36,6 +41,7 @@ class counter c =
   object
     val this = c
     method reset = Binding.counter_reset this
+    method init = Binding.counter_init this
     method getJoules = Binding.counter_get_Joules this
   end
   
@@ -49,6 +55,7 @@ class mammut =
   object
     val this = Binding.create_Mammut();
     method getInstanceEnergy = new energy (Binding.mammut_getInstanceEnergy this);
+    initializer Gc.finalise Binding.destroy_Mammut this
   end
 
 

@@ -36,8 +36,6 @@ uninstall:
 
 
 
-test :test.asm test.byte
-
 clean :
 	rm -rf *.so *.o test *.a *.mli
 	rm -rf *.cm* *.asm *.byte
