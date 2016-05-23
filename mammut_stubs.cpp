@@ -38,6 +38,19 @@ extern "C" {
   energy::Joules getJoules(energy::Counter* c){
     return  c->getJoules();
   }
+  energy::Joules getJoulesCpuAll(energy::Counter* c){
+    return  ((energy::CounterCpus*)c)->getJoulesCpuAll();
+  }
+  energy::Joules getJoulesCoresAll(energy::Counter* c){
+    return  ((energy::CounterCpus*)c)->getJoulesCoresAll();
+  }
+  energy::Joules getJoulesDramAll(energy::Counter* c){
+    return  ((energy::CounterCpus*)c)->getJoulesDramAll();
+  }
+  energy::Joules getJoulesGraphicAll(energy::Counter* c){
+    return  ((energy::CounterCpus*)c)->getJoulesGraphicAll();
+  }
+  
   void reset(energy::Counter* c){return c->reset();}
   bool init(energy::Counter* c){return c->init();}
   

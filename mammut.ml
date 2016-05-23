@@ -34,7 +34,14 @@ module Binding = struct
     foreign "init" (ptr counter @-> returning void)
   let counter_get_Joules =
     foreign "getJoules" (ptr counter @-> returning double)
-  
+  let counter_get_JoulesCpuAll =
+    foreign "getJoulesCpuAll" (ptr counter @-> returning double)
+  let counter_get_JoulesCoresAll =
+    foreign "getJoulesCoresAll" (ptr counter @-> returning double)
+  let counter_get_JoulesDramAll =
+    foreign "getJoulesDramAll" (ptr counter @-> returning double)
+  let counter_get_JoulesGraphicAll =
+    foreign "getJoulesGraphicAll" (ptr counter @-> returning double)
 end
 
 class counter c =
@@ -43,6 +50,10 @@ class counter c =
     method reset = Binding.counter_reset this
     method init = Binding.counter_init this
     method getJoules = Binding.counter_get_Joules this
+    method getJoulesCpuAll = Binding.counter_get_JoulesCpuAll this
+    method getJoulesCoresAll = Binding.counter_get_JoulesCoresAll this
+    method getJoulesDramAll = Binding.counter_get_JoulesDramAll this
+    method getJoulesGraphicAll = Binding.counter_get_JoulesGraphicAll this
   end
   
 class energy e =
