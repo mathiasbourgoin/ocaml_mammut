@@ -4,7 +4,7 @@ CXXFLAGS=--shared --std=c++11 -fPIC -pedantic -W -Wall
 all : mammut.cmxa mammut.cma
 
 mammut.cmxa : mammut.cmi libmammut_stubs.so
-	ocamlfind ocamlopt -a -o mammut.cmxa  -package ctypes.foreign mammut.ml  -cclib -L/usrl/local/lib -cclib -lmammut -cclib -lstdc++
+	ocamlfind ocamlopt -a -o mammut.cmxa  -package ctypes.foreign mammut.ml  -cclib -L/usrl/local/lib -cclib -lmammut -cclib -lstdc++ -cclib -lrt
 
 mammut.cma : mammut.cmi libmammut_stubs.so
 	ocamlfind ocamlc -a -o mammut.cma  -package ctypes.foreign mammut.ml -cclib -L. -cclib -L/usrl/local/lib -cclib -lmammut -cclib -lstdc++ -cclib -lrt
