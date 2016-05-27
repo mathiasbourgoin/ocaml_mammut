@@ -18,7 +18,7 @@ sudo apt-get update -qq
 
 sudo apt-get install -qq ocaml ocaml-native-compilers camlp4-extra opam libffi-dev g++-4.8
 export CXX="g++-4.8"
-alias g++='g++-4.8'
+
 
 export OPAMYES=1
 export OPAMVERBOSE=1
@@ -37,4 +37,4 @@ esac
 opam install ctypes ctypes-foreign
 #opam install ${OPAM_DEPENDS}
 
-git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut && make && sudo make install
+git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut && sed -i `s/g++/g++-4.8/g' Makefile && make && sudo make install
