@@ -13,8 +13,12 @@ case "$OCAML_VERSION,$OPAM_VERSION" in
 esac
 
 echo "yes" | sudo add-apt-repository ppa:$ppa
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 sudo apt-get update -qq
-sudo apt-get install -qq ocaml ocaml-native-compilers camlp4-extra opam libffi-dev
+
+sudo apt-get install -qq ocaml ocaml-native-compilers camlp4-extra opam libffi-dev g++-4.8
+export CXX="g++-4.8"
+
 
 export OPAMYES=1
 export OPAMVERBOSE=1
@@ -30,8 +34,7 @@ case $OCAML_VERSION in
     4.02|4.02.3) opam install camlp4;;
 esac
 #opam install ocp-build ctypes
-opam install ctypes ctypes-foreign
+opam install ctypes ctypes-foreign ocamlfind
 #opam install ${OPAM_DEPENDS}
 
-make 
-make test.asm
+git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut && sed -i 's/g++/g++-4.8/g' Makefile && make && sudo make install
