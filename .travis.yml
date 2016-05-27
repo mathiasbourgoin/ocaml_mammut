@@ -2,10 +2,11 @@ language: c
 sudo: required
 before_install:
  - bash -ex .travis-ci.sh
-install: make test.asm
+install:
+  - eval `opam config env`
+  - make test.asm
 env:
   global:
     - OPAM_DEPENDS=""
   matrix:
     - OCAML_VERSION=4.02.3 OPAM_VERSION=1.2.0
-
