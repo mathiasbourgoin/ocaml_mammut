@@ -36,4 +36,4 @@ esac
 opam install ctypes ctypes-foreign
 #opam install ${OPAM_DEPENDS}
 
-git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut/mammut && make && sudo make install
+git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut/mammut && CXXFLAGS="-O3 -finlinefunctions --std=c++11" make && sudo make install
