@@ -16,7 +16,7 @@ mammut.mli : mammut.ml
 	ocamlfind ocamlc -package ctypes.foreign -i mammut.ml > mammut.mli
 
 libmammut_stubs.so : mammut_stubs.cpp
-	g++ $(CXXFLAGS)  mammut_stubs.cpp -o $@
+	$(CXX) $(CXXFLAGS)  mammut_stubs.cpp -o $@
 
 test.asm: test.ml mammut.cmxa
 	ocamlfind ocamlopt  -package ctypes.foreign mammut.cmxa -cclib libmammut_stubs.so -cclib -lmammut -cclib -lstdc++ -linkpkg  -thread  -o test test.ml
