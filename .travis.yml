@@ -4,6 +4,7 @@ before_install:
  - bash -ex .travis-ci.sh
 install:
   - eval `opam config env`
+  - export CXX=g++-4.8
   - make test.asm
 env:
   global:
