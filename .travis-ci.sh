@@ -36,5 +36,4 @@ esac
 opam install ctypes ctypes-foreign
 #opam install ${OPAM_DEPENDS}
 
-make 
-make test.asm
+git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut && sudo make install
