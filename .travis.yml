@@ -2,10 +2,8 @@ language: c
 sudo: required
 before_install:
  - bash -ex .travis-ci.sh
-install:
-  - eval `opam config env`
-  - export CXX=g++-4.8
-  - make test.asm
+script:
+   - bash -ex .travis-ci2.sh
 env:
   global:
     - OPAM_DEPENDS=""
