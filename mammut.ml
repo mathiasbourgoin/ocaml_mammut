@@ -49,8 +49,8 @@ module Binding = struct
     foreign "getType" (ptr counter @-> returning int)
   let counter_reset =
     foreign "reset" (ptr counter @-> returning void)
-  let counter_init =
-    foreign "init" (ptr counter @-> returning bool)
+  (* let counter_init =
+   *   foreign "init" (ptr counter @-> returning bool) *)
   let counter_get_Joules =
     foreign "getJoules" (ptr counter @-> returning double)
   let counter_get_JoulesCpu  =
@@ -138,10 +138,11 @@ class counter c =
 
     (** Resets the value of the counter.*)
     method reset = Binding.counter_reset this
+
     (** Initializes the counter.
         @return true if the counter is present, false otherwise.
     *)
-    method init = Binding.counter_init this
+    (* method init = Binding.counter_init this *)
 
     (** Returns the joules consumed up to this moment.
         @return The joules consumed up to this moment.*)

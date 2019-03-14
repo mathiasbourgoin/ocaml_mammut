@@ -23,8 +23,8 @@ extern "C" {
   {return c->getDomain(v);}
   std::vector<Domain*> getDomainsV(CpuFreq* c, std::vector<topology::VirtualCore*>& v) {return c->getDomains(v);}
   std::vector<Domain*> getDomainsComplete(CpuFreq* c, std::vector<topology::VirtualCore*>& v) {return c->getDomainsComplete(v);}
-  std::vector<RollbackPoint> getRollbackPoint(CpuFreq* c){return c->getRollbackPoints();}
-  void rollback(CpuFreq* c, std::vector<RollbackPoint>& r ){return c->rollback(r);}
+//  std::vector<RollbackPoint> getRollbackPoint(CpuFreq* c){return c->getRollbackPoints();}
+//  void rollback(CpuFreq* c, std::vector<RollbackPoint>& r ){return c->rollback(r);}
   bool isGovernorAvailable(CpuFreq* c, Governor g){return c->isGovernorAvailable(g);}
   bool isBoostingSupported(CpuFreq* c){return c->isBoostingSupported();}
   bool isBoostingEnabled(CpuFreq* c){return c->isBoostingEnabled();}
@@ -42,7 +42,7 @@ extern "C" {
     return  c->getJoules();
   }
   void reset(energy::Counter* c){return c->reset();}
-  bool init(energy::Counter* c){return c->init();}
+  // bool init(energy::Counter* c){return c->init();}
   energy::CounterType getType(energy::Counter*c){return c ->getType();}
 
   /** Class CounterCpus */

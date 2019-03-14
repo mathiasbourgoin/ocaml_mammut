@@ -6,9 +6,13 @@ let rec fibo = function
   | n -> fibo (n-1) + fibo (n-2)
 
 let _ =
+  Printf.printf "Starting\n%!" ;
   let m = new mammut in
+  Printf.printf "Starting\n%!" ;
   let e = m#getInstanceEnergy in
+  Printf.printf "Starting\n%!" ;
   let c = e#getCounter in
+  Printf.printf "Starting\n%!" ;
   c#reset;
   Unix.sleep(2);
   Printf.printf "%g joules consummed in the last 2 seconds \n%!" c#getJoulesCpuAll;
