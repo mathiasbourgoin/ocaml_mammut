@@ -37,4 +37,4 @@ esac
 opam install ctypes ctypes-foreign ocamlfind
 #opam install ${OPAM_DEPENDS}
 
-git clone https://github.com/DanieleDeSensi/mammut.git && cd mammut && sed -i 's/g++/g++-4.8/g' Makefile && make && sudo make install
+git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut && sed -i 's/g++/g++-4.8/g' Makefile && make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
