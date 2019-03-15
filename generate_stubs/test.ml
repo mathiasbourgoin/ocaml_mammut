@@ -1,6 +1,3 @@
-
-open Ocaml_mammut
-
 let rec fibo = function
   | 0 -> 0
   | 1 -> 1
@@ -8,6 +5,7 @@ let rec fibo = function
 
 
 let print_joules = fun c ->
+  let open Mammut in
   let joules = Counter.getJoules c
   and joulesCoreAll = CounterCpus.getJoulesCoresAll c
   and joulesDramAll =  CounterCpus.getJoulesDramAll c 
@@ -18,8 +16,9 @@ let print_joules = fun c ->
   Printf.printf "  %g joules <--- getJoulesGraphicAll \n" joulesGraphicAll 
 
 let _ = 
-  let m = Mammut.create () in
-  let e = Mammut.getInstanceEnergy m in
+  let open Mammut in
+  let m = create () in
+  let e = getInstanceEnergy m in
   let c = Energy.getCounter e  in
   Unix.sleep(2) ;
   Printf.printf "consummed in the last 2 seconds \n%!" ;

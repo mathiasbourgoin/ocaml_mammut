@@ -3,14 +3,9 @@ open Cstubs
 
 module T = Generate_stubs.Bindings(Mammut_generated)
 
-
-
-
-module Mammut = struct
-  let create = T.create_Mammut
-  let destroy = T.destroy_Mammut
-  let getInstanceEnergy = T.mammut_getInstanceEnergy
-end
+let create = T.create_Mammut
+let destroy = T.destroy_Mammut
+let getInstanceEnergy = T.mammut_getInstanceEnergy
 
 module Energy = struct
   let getCounter = T.energy_getCounter
