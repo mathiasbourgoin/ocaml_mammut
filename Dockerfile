@@ -21,12 +21,14 @@ RUN git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut \
 
 RUN rm -rf  && git clone https://gitlab.com/MBourgoin/ocaml_mammut.git && chown -R mammut /home/mammut/ocaml_mammut
 
-WORKDIR ocaml_mammut/generate_stubs
+WORKDIR ocaml_mammut/
+RUN dockerscripts/install_ocaml.sh
+
+WORKDIR generate_stubs/
 USER mammut
 CMD /bin/bash
 
 
-RUN dockerscripts/install_ocaml.sh
 
 RUN eval $(/home/spoc/opam env) && make install
 
