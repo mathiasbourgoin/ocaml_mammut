@@ -3,7 +3,6 @@ let rec fibo = function
   | 1 -> 1
   | n -> fibo (n-1) + fibo (n-2)
 
-
 let print_joules = fun c ->
   let open Mammut in
   let joules = Counter.getJoules c
