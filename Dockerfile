@@ -15,7 +15,8 @@ RUN useradd -ms /bin/bash mammut && echo "mammut:mammut" | chpasswd && adduser m
 
 WORKDIR /home/mammut
 
-RUN git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut && sed -i 's/g++/g++-4.8/g' Makefile && make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
+RUN git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut \
+    && make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
 
 
 RUN rm -rf  && git clone https://gitlab.com/MBourgoin/ocaml_mammut.git && chown -R mammut /home/mammut/ocaml_mammut
@@ -27,7 +28,7 @@ CMD /bin/bash
 
 RUN dockerscripts/install_ocaml.sh
 
-RUN eval $(/home/spoc/opam env) && make install 
+RUN eval $(/home/spoc/opam env) && make install
 
 RUN eval $(/home/spoc/opam env) && make install_test
 
@@ -37,4 +38,4 @@ RUN mv /home/mammut/opam /usr/bin/opam
 USER mammut
 
 WORKDIR /home/mammut
- 
+
