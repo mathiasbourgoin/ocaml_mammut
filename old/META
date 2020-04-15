@@ -1,0 +1,8 @@
+version = "0.1-alpha"
+description = "mammut"
+requires = "ctypes.foreign,threads"
+linkopts = "-cclib -lstdc++ -cclib -lmammut"
+archive(native) = "mammut.cmxa"
+archive(byte) = "mammut.cmxa"
+browse_interfaces = "Unit name: Mammut "
+exists_if = "mammut.cmxa"

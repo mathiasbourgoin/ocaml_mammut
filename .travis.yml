@@ -4,6 +4,7 @@ before_install: test -e .travis.opam.sh || wget https://raw.githubusercontent.co
 install: bash -ex .travis-opam.sh && bash -ex .travis-ci.sh
 script: bash-ex .travis-ci2.sh
 env:
+  - PACKAGE=mammut
   - OCAML_VERSION=4.08
   - OCAML_VERSION=4.09
   - OCAML_VERSION=4.10
