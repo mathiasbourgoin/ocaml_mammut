@@ -19,6 +19,19 @@ let _ =
   let m = create () in
   let e = getInstanceEnergy m in
   let c = Energy.getCounter e  in
+  let available_types = Energy.getCountersTypes e in
+  Printf.printf "Found counters of type : \n" ;
+  List.iter (fun c -> Printf.printf "\t\t- %s\n"(Counter.type_to_string c)) available_types ;
+  Printf.printf "Try to get a CPU counter : %!" ;
+  (try ignore(Energy.getCounterByType e Types.CPU) ;
+      Printf.printf "success \n%!"
+  with _ ->     Printf.printf "failure \n%!" );
+  (Printf.printf "Try to get a Plug counter : %!" ;
+  try ignore(Energy.getCounterByType e Types.Plug) ;
+      Printf.printf "success \n%!"
+  with _ ->     Printf.printf "failure \n%!" );
+  let counterType = Counter.getType c in
+  Printf.printf "Using default counter (type : %s)\n%!" (Counter.type_to_string counterType) ;
   Printf.printf "consummed sleeping for 2 seconds :\n%!" ;
   Unix.sleep(2) ;
   print_joules c ;
