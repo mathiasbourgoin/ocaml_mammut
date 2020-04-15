@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker-compose run --rm tester --privileged --cap-add=ALL -v /lib/modules:/lib/modules
+  - docker-compose run --rm tester

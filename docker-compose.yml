@@ -4,5 +4,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.test
-    command: make test
+    command: make test.asm
 
