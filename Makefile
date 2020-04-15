@@ -37,8 +37,11 @@ mammut_generated.cmx: mammut_generated.ml mammut_types.cmx
 	 ocamlfind ocamlopt -I /usr/local/include/ -package ctypes.stubs -linkpkg  mammut_stubs.o -c mammut_generated.ml mammut_types.cmx
 
 
-test: test.ml ocaml_mammut.cmxa mammut_stubs.o libocaml_mammut.a
-	ocamlfind ocamlopt  -thread -package ctypes.stubs -linkpkg -cclib -lunix -cclib -lpthread  -cclib -lstdc++  -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut -I . ocaml_mammut.cmxa  test.ml -o test
+test.asm: test.ml ocaml_mammut.cmxa mammut_stubs.o libocaml_mammut.a
+	ocamlfind ocamlopt  -thread -package ctypes.stubs -linkpkg -cclib -lunix -cclib -lpthread  -cclib -lstdc++  -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut -I . ocaml_mammut.cmxa  test.ml -o test.asm
+
+test: test.asm
+	./test.asm
 
 install: ocaml_mammut.cmxa
 	ocamlfind install mammut  mammut.cmx *.a ocaml_mammut.cmxa *.cmi  META

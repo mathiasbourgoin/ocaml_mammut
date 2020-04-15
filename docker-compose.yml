@@ -1,0 +1,8 @@
+version: '2'
+services:
+  tester:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    command: make test
+

@@ -12,14 +12,16 @@ RUN  apt-get -yq install --no-install-recommends        \
 
 
 RUN useradd -ms /bin/bash mammut && echo "mammut:mammut" | chpasswd && adduser mammut sudo
-
+USER mammut
 WORKDIR /home/mammut
+CMD /bin/bash
 
-RUN git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut \
-    && make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
+RUN git clone https://github.com/mathiasbourgoin/mammut.git
+RUN cd mammut && cmake && make && sudo make install && \
+    cd mammut/external/libusb-1.0.9/ && sudo make install
 
 
-RUN rm -rf  && git clone https://gitlab.com/MBourgoin/ocaml_mammut.git && chown -R mammut /home/mammut/ocaml_mammut
+RUN  git clone https://gitlab.com/MBourgoin/ocaml_mammut.git && chown -R mammut /home/mammut/ocaml_mammut
 
 WORKDIR ocaml_mammut/
 RUN dockerscripts/install_ocaml.sh
