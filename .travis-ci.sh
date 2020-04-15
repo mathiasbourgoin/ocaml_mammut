@@ -34,7 +34,9 @@
 #     4.02|4.02.3) opam install camlp4;;
 # esac
 #opam install ocp-build ctypes
-opam install camlp4 ctypes ctypes-foreign ocamlfind
+opam install -y ctypes ctypes-foreign ocamlfind
+
+sudo apt-get install cmake
 #opam install ${OPAM_DEPENDS}
 
-git clone https://github.com/mathiasbourgoin/mammut.git && cd mammut && sed -i 's/g++/g++-4.8/g' Makefile && make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
+git clone https://github.com/mathiasbourgoin/mammut.git && cmake &&  make && sudo make install && cd mammut/external/libusb-1.0.9/ && sudo make install
