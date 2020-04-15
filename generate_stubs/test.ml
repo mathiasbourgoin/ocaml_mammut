@@ -12,27 +12,27 @@ let print_joules = fun c ->
   Printf.printf "  %g joules <--- getJoules \n" joules ;
   Printf.printf "  %g joules <--- getJoulesCoreAll \n" joulesCoreAll ;
   Printf.printf "  %g joules <--- getJoulesDramAll \n" joulesDramAll ;
-  Printf.printf "  %g joules <--- getJoulesGraphicAll \n" joulesGraphicAll 
+  Printf.printf "  %g joules <--- getJoulesGraphicAll \n%!" joulesGraphicAll
 
-let _ = 
+let _ =
   let open Mammut in
   let m = create () in
   let e = getInstanceEnergy m in
   let c = Energy.getCounter e  in
+  Printf.printf "consummed sleeping for 2 seconds :\n%!" ;
   Unix.sleep(2) ;
-  Printf.printf "consummed in the last 2 seconds \n%!" ;
   print_joules c ;
   Counter.reset c ;
+  Printf.printf "consummed sleeping for 4 seconds :\n%!" ;
   Unix.sleep(4) ;
-  Printf.printf "consummed in the last 4 seconds \n%!" ;
   print_joules c ;
   Counter.reset c ;
+  Printf.printf "consummed computing fibo 36 :\n%!" ;
   ignore(fibo 36);
-  Printf.printf "consummed computing fibo 36 \n%!" ;
   print_joules c ;
   Counter.reset c;
+  Printf.printf "consummed computing fibo 48 :\n%!" ;
   ignore(fibo 48);
-  Printf.printf "consummed computing fibo 48 \n%!" ;
   print_joules c;
   ()
 
