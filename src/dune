@@ -1,0 +1,98 @@
+; The final FFI module, containing all the OCaml bits, and linked with libmammut
+(library
+ (name mammut)
+ (public_name mammut)
+ (wrapped false)
+ (modules Mammut_generated)
+ (libraries ctypes mammut_stubs_description)
+ (foreign_stubs
+  (language c)
+  (names mammut_stubs )
+  (include_dirs vendor/mammut/include))
+ (foreign_archives mammut))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+; The vendored libmammut.
+(rule
+ (targets libmammut.a dllmammut%{ext_dll})
+ (deps (source_tree vendor))
+ (action (progn
+  (chdir vendor/mammut (progn
+   (bash
+    "cmake .")
+   (ignore-outputs (bash
+    "make"))))
+  (bash
+   "cp vendor/mammut/src/libmammut_static.a libmammut.a")
+  (bash
+   "cp vendor/mammut/src/libmammut.so dllmammut.so")
+  )))
+
+(data_only_dirs vendor)
+
+;;;;;;;;;;;;;;;;;;
+
+
+
+
+; Type bindings.
+(library
+ (name generate_types)
+ (public_name mammut.c_type_descriptions)
+ (modules Generate_types)
+ (libraries ctypes))
+
+(executable
+ (name generate_types_start)
+ (modules Generate_types_start)
+ (libraries ctypes.stubs generate_types))
+
+
+(rule
+ (with-stdout-to mammut_c_types.c
+  (run ./generate_types_start.exe)))
+
+; Based partially on
+;   https://github.com/avsm/ocaml-yaml/blob/master/types/stubgen/jbuild#L20
+(rule
+ (targets mammut_types.exe)
+ (deps (:c mammut_c_types.c))
+ (action (bash "\
+  %{cc} %{c} \
+  -I '%{lib:ctypes:.}' \
+  -I %{ocaml_where} \
+  -I vendor/mammut/include -o %{targets}")))
+
+(rule
+ (with-stdout-to mammut_types.ml
+  (run ./mammut_types.exe)))
+
+; Function bindings.
+(library
+ (name mammut_stubs_description)
+ (public_name mammut.c_function_descriptions)
+ (flags (:standard -w -9-16-27))
+ (wrapped false)
+ (modules Mammut_types Mammut_stubs_description)
+ (libraries ctypes generate_types))
+
+(executable
+ (name generate_c_functions)
+ (modules Generate_c_functions)
+ (libraries ctypes.stubs mammut_stubs_description))
+
+
+(executable
+ (name generate_ml_functions)
+ (modules Generate_ml_functions)
+ (libraries ctypes.stubs mammut_stubs_description))
+
+(rule
+ (with-stdout-to mammut_generated.ml
+  (run ./generate_ml_functions.exe)))
+
+(rule
+ (with-stdout-to mammut_stubs.c
+  (run ./generate_c_functions.exe)))
