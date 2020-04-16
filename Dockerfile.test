@@ -12,7 +12,7 @@ CMD /bin/bash
 USER root
 
 # install mammut fork
-RUN git clone https://github.com/mathiasbourgoin/mammut.git && \
+RUN git clone https://github.com/DanieleDeSensi/mammut.git && \
     cd mammut && cmake . && make
 
 RUN cd mammut && make install && \
@@ -25,7 +25,7 @@ RUN opam install ctypes ctypes-foreign ocamlfind
 # copy and compile test
 CMD mkdir ocaml_mammut && cd ocaml_mammut
 ADD . .
-RUN cp mammut/src/external/odroid-smartpower-linux/libsmartgauge.so .
+RUN cp mammut/src/external/odroid-smartpower-linux/libsmartgauge.so src/
 
 RUN eval $(opam env)  && LD_LIBRARY_PATH=. make test.asm
 
