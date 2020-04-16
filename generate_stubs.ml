@@ -1,6 +1,4 @@
 open Ctypes
-open Cstubs
-open Foreign
 module Mt = Generate_types
 module T = Mt.Types (Mammut_types)
 

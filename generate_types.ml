@@ -1,6 +1,3 @@
-open Ctypes
-open Cstubs
-
 module Types (T : Cstubs.Types.TYPE) = struct
   type counter_type = CPU | Plug | Unknown of int64
 

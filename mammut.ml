@@ -1,5 +1,4 @@
 open Ctypes
-open Cstubs
 module T = Generate_stubs.Bindings (Mammut_generated)
 module Types = Generate_stubs.T
 
@@ -17,7 +16,7 @@ let debug () =
 
 module Energy = struct
   let getCountersTypes e =
-    let initial = allocate_n Types.counter_type 1 in
+    let initial = allocate_n Types.counter_type ~count:1 in
     let arr = CArray.make ~initial (ptr Types.counter_type) 10 in
     let size = allocate int64_t 0L in
     T.energy_getCountersTypes e (CArray.start arr) size ;
