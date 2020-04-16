@@ -1,3 +1,6 @@
+../ocaml_mammut.cmxa:
+	cd .. && make ocaml_mammut.cmxa
+
 test.asm: test.ml ../ocaml_mammut.cmxa ../mammut_stubs.o ../libocaml_mammut.a
 	ocamlfind ocamlopt  -thread -package ctypes.stubs -linkpkg -cclib -lunix -cclib -lpthread  -cclib -lstdc++  -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut -I .. ocaml_mammut.cmxa  test.ml -o test.asm
 
