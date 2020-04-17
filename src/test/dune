@@ -1,0 +1,9 @@
+(executable
+ (name test)
+ (flags (:standard -w -49 -cclib -lstdc++ -cclib -lraplcap-msr -cclib -lsmartgauge -cclib -lusb-1.0 -cclib -lmammut))
+ (libraries mammut mammut_generated threads))
+
+
+(rule
+ (alias runtest)
+ (action (run %{exe:test.exe})))

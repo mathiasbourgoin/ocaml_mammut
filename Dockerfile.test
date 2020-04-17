@@ -1,5 +1,5 @@
 FROM ocaml/opam2:ubuntu
-CMD /bin/bash 
+CMD /bin/bash
 
 ENV OPAMYES true
 RUN sudo apt-get -yq install cmake m4 pkg-config libffi-dev
@@ -11,22 +11,13 @@ CMD /bin/bash
 
 USER root
 
-# install mammut fork
-RUN git clone https://github.com/DanieleDeSensi/mammut.git && \
-    cd mammut && cmake . && make
-
-RUN cd mammut && make install && \
-    cd src/external/libusb-1.0.9/ && make install && ldconfig
-
-
 # install opam dependencies
 RUN opam install ctypes ctypes-foreign ocamlfind
 
 # copy and compile test
 CMD mkdir ocaml_mammut && cd ocaml_mammut
 ADD . .
-RUN cp mammut/src/external/odroid-smartpower-linux/libsmartgauge.so src/
 
-RUN eval $(opam env)  && LD_LIBRARY_PATH=. make test.asm
+RUN eval $(opam env)  && make && make test
 
 #need msr (modprobe msr) to run the test

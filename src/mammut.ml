@@ -1,6 +1,6 @@
 open Ctypes
-module T = Generate_stubs.Bindings (Mammut_generated)
-module Types = Generate_stubs.T
+module T = Mammut_stubs_description.Bindings (Mammut_generated)
+module Types = Mammut_stubs_description.T
 
 let create = T.create_Mammut
 
