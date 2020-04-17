@@ -1,13 +1,21 @@
-; The final FFI module, containing all the OCaml bits, and linked with libmammut
 (library
  (name mammut)
- (public_name mammut)
+ (flags (:standard -w -49 -linkall -cclib -lstdc++  -cclib -lraplcap-msr -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut))
+ (modules Mammut)
+ (foreign_archives mammut)
+ (libraries ctypes ctypes.stubs mammut_generated threads)
+)
+
+; The final FFI module, containing all the OCaml bits, and linked with libmammut
+(library
+ (name mammut_generated)
+ (public_name mammut.c)
  (wrapped false)
  (modules Mammut_generated)
  (libraries ctypes mammut_stubs_description)
  (foreign_stubs
   (language c)
-  (names mammut_stubs )
+  (names mammut_stubs)
   (include_dirs vendor/mammut/include))
  (foreign_archives mammut))
 
@@ -16,25 +24,31 @@
 
 ; The vendored libmammut.
 (rule
- (targets libmammut.a dllmammut%{ext_dll})
+ (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a libsmartgauge.a libraplcap-msr.a)
  (deps (source_tree vendor))
  (action (progn
   (chdir vendor/mammut (progn
    (bash
     "cmake .")
+   (bash
+    "make cap")
    (ignore-outputs (bash
     "make"))))
   (bash
    "cp vendor/mammut/src/libmammut_static.a libmammut.a")
   (bash
    "cp vendor/mammut/src/libmammut.so dllmammut.so")
+  (bash
+   "cp vendor/mammut/external/lib/libraplcap-msr.a .")
+  (bash
+   "cp vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.a .")
+  (bash
+   "cp vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
   )))
 
 (data_only_dirs vendor)
 
 ;;;;;;;;;;;;;;;;;;
-
-
 
 
 ; Type bindings.
