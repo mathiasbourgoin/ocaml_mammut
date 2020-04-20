@@ -1,7 +1,7 @@
 (library
  (name mammut)
  (flags (:standard -w -49 -linkall -cclib -lstdc++  -cclib -lraplcap-msr -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut))
- (modules Mammut)
+ (modules mammut)
  (foreign_archives mammut)
  (libraries ctypes ctypes.stubs mammut_generated threads)
 )
@@ -11,7 +11,7 @@
  (name mammut_generated)
  (public_name mammut.c)
  (wrapped false)
- (modules Mammut_generated)
+ (modules mammut_generated)
  (libraries ctypes mammut_stubs_description)
  (foreign_stubs
   (language c)
@@ -55,12 +55,12 @@
 (library
  (name generate_types)
  (public_name mammut.c_type_descriptions)
- (modules Generate_types)
+ (modules generate_types)
  (libraries ctypes))
 
 (executable
  (name generate_types_start)
- (modules Generate_types_start)
+ (modules generate_types_start)
  (libraries ctypes.stubs generate_types))
 
 
@@ -89,18 +89,18 @@
  (public_name mammut.c_function_descriptions)
  (flags (:standard -w -9-16-27))
  (wrapped false)
- (modules Mammut_types Mammut_stubs_description)
+ (modules mammut_types mammut_stubs_description)
  (libraries ctypes generate_types))
 
 (executable
  (name generate_c_functions)
- (modules Generate_c_functions)
+ (modules generate_c_functions)
  (libraries ctypes.stubs mammut_stubs_description))
 
 
 (executable
  (name generate_ml_functions)
- (modules Generate_ml_functions)
+ (modules generate_ml_functions)
  (libraries ctypes.stubs mammut_stubs_description))
 
 (rule
