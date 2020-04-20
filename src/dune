@@ -9,7 +9,7 @@
 ; The final FFI module, containing all the OCaml bits, and linked with libmammut
 (library
  (name mammut_generated)
- (public_name mammut.c)
+ (public_name mammut_c)
  (wrapped false)
  (modules mammut_generated)
  (libraries ctypes mammut_stubs_description)
@@ -54,7 +54,7 @@
 ; Type bindings.
 (library
  (name generate_types)
- (public_name mammut.c_type_descriptions)
+ (public_name mammut_c.type_descriptions)
  (modules generate_types)
  (libraries ctypes))
 
@@ -64,14 +64,14 @@
  (libraries ctypes.stubs generate_types))
 
 (rule
- (with-stdout-to mammut_c_types.c
+ (with-stdout-to mammut_c.types.c
   (run ./generate_types_start.exe)))
 
 ; Based partially on
 ;   https://github.com/avsm/ocaml-yaml/blob/master/types/stubgen/jbuild#L20
 (rule
  (targets mammut_types.exe)
- (deps (:c mammut_c_types.c))
+ (deps (:c mammut_c.types.c))
  (action (bash "\
   %{cc} %{c} \
   -I '%{lib:ctypes:.}' \
@@ -85,7 +85,7 @@
 ; Function bindings.
 (library
  (name mammut_stubs_description)
- (public_name mammut.c_function_descriptions)
+ (public_name mammut_c.function_descriptions)
  (flags (:standard -w -9-16-27))
  (wrapped false)
  (modules mammut_types mammut_stubs_description)
