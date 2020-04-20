@@ -1,5 +1,5 @@
 all:
-	cd c && make
+	cd src && dune build
 
 test :
 	cd test && make test
@@ -8,5 +8,5 @@ runtest :
 	cd test && make runtest
 
 clean:
-	cd c && make clean
-	cd c/test && make clean
+	cd src && dune clean
+	cd test && dune clean

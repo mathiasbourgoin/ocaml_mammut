@@ -1,30 +1,7 @@
 (library
  (name mammut)
  (public_name mammut)
- (flags (:standard -w -49 -linkall -cclib -lstdc++  -cclib -lraplcap-msr -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut))
+ (flags (:standard -w -49 -linkall -cclib -lstdc++ ))
  (modules mammut)
  (libraries ctypes ctypes.stubs mammut_generated threads)
 )
-
-(rule
- (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a libsmartgauge.a libraplcap-msr.a)
- (deps (source_tree ../c/vendor))
- (action (progn
-  (chdir ../c/vendor/mammut (progn
-   (bash
-    "cmake .")
-   (bash
-    "make cap")
-   (ignore-outputs (bash
-    "make"))))
-  (bash
-   "cp ../c/vendor/mammut/src/libmammut_static.a libmammut.a")
-  (bash
-   "cp ../c/vendor/mammut/src/libmammut.so dllmammut.so")
-  (bash
-   "cp ../c/vendor/mammut/external/lib/libraplcap-msr.a .")
-  (bash
-   "cp ../c/vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.a .")
-  (bash
-   "cp ../c/vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
-  )))

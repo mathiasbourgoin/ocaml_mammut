@@ -1,6 +1,3 @@
-
-
-
 ; The final FFI module, containing all the OCaml bits, and linked with libmammut
 (library
  (name mammut_generated)
@@ -11,36 +8,60 @@
  (foreign_stubs
   (language c)
   (names mammut_stubs)
-  (include_dirs vendor/mammut/include))
- (foreign_archives mammut))
+  (include_dirs ../../vendor/mammut/include))
+ (foreign_archives raplcap-msr mammut usb-1.0 smartgauge)
+)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 
 
 ; The vendored libmammut.
 (data_only_dirs vendor)
 
 (rule
- (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a libsmartgauge.a libraplcap-msr.a)
- (deps (source_tree vendor))
+ (targets libraplcap-msr.a dllraplcap-msr%{ext_dll})
+ (deps (source_tree ../../vendor))
  (action (progn
-  (chdir vendor/mammut (progn
+  (chdir ../../vendor/raplcap (progn
+   (bash
+    "cmake -B_build/shared -DBUILD_SHARED_LIBS=ON .")
+   (bash
+    "cmake --build _build/shared")))
+   (bash 
+    "cp ../../vendor/raplcap/_build/shared/msr/libraplcap-msr.so dllraplcap-msr.so")
+  (chdir ../../vendor/raplcap (progn
+   (bash
+    "cmake -B_build/static .")
+   (bash
+    "cmake --build _build/static")))
+   (bash 
+    "cp ../../vendor/raplcap/_build/static/msr/libraplcap-msr.a .")
+)))
+
+(rule
+ (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a  dllusb-1.0%{ext_dll} libsmartgauge.a dllsmartgauge%{ext_dll})
+ (deps (source_tree ../../vendor))
+ (action (progn
+  (chdir ../../vendor/mammut (progn
    (bash
     "cmake .")
-   (bash
-    "make cap")
    (ignore-outputs (bash
     "make"))))
   (bash
-   "cp vendor/mammut/src/libmammut_static.a libmammut.a")
+   "cp ../../vendor/mammut/src/libmammut_static.a libmammut.a")
   (bash
-   "cp vendor/mammut/src/libmammut.so dllmammut.so")
+   "cp ../../vendor/mammut/src/libmammut.so dllmammut.so")
   (bash
-   "cp vendor/mammut/external/lib/libraplcap-msr.a .")
+   "cp ../../vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.a .")
   (bash
-   "cp vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.a .")
+   "cp ../../vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.so dllusb-1.0.so")
   (bash
-   "cp vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
+   "cp ../../vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
+  (bash
+   "cp ../../vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.so dllsmartgauge.so")
   )))
 
 ;;;;;;;;;;;;;;;;;;
