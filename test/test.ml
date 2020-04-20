@@ -39,15 +39,15 @@ let _ =
   Unix.sleep 2 ;
   print_joules c ;
   Counter.reset c ;
-  Printf.printf "consummed sleeping for 4 seconds :\n%!" ;
-  Unix.sleep 4 ;
-  print_joules c ;
-  Counter.reset c ;
+  (* Printf.printf "consummed sleeping for 4 seconds :\n%!" ;
+   * Unix.sleep 4 ;
+   * print_joules c ;
+   * Counter.reset c ; *)
   Printf.printf "consummed computing fibo 36 :\n%!" ;
   ignore (fibo 36) ;
   print_joules c ;
-  Counter.reset c ;
-  Printf.printf "consummed computing fibo 48 :\n%!" ;
-  ignore (fibo 48) ;
-  print_joules c ;
+  (* Counter.reset c ;
+   * Printf.printf "consummed computing fibo 48 :\n%!" ;
+   * ignore (fibo 48) ;
+   * print_joules c ; *)
   ()

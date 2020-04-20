@@ -1,12 +1,12 @@
 all:
-	cd src && make
+	cd c && make
 
 test :
-	cd src && make test
+	cd test && make test
 
 runtest :
-	cd src && make runtest
+	cd test && make runtest
 
 clean:
-	cd src && make clean
-	cd src/test && make clean
+	cd c && make clean
+	cd c/test && make clean

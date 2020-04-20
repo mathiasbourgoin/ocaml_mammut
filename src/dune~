@@ -1,0 +1,7 @@
+(library
+ (name mammut)
+ (flags (:standard -w -49 -linkall -cclib -lstdc++  -cclib -lraplcap-msr -cclib -lusb-1.0 -cclib -lsmartgauge -cclib -lmammut))
+ (modules mammut)
+ (foreign_archives mammut)
+ (libraries ctypes ctypes.stubs mammut_generated threads)
+)

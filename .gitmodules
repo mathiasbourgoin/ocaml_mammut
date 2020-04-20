@@ -1,3 +1,3 @@
-[submodule "src/vendor/mammut"]
-	path = src/vendor/mammut
+[submodule "c/vendor/mammut"]
+	path = c/vendor/mammut
 	url = https://github.com/DanieleDeSensi/mammut.git

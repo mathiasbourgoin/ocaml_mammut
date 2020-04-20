@@ -1,5 +1,5 @@
 opam-version: "2.0"
-name: "ocaml_mammut"
+name: "mammut_generated"
 version: "~dev"
 synopsis: "Mammut for OCaml"
 maintainer: "mathias.bourgoin@nomadic-labs.com"
