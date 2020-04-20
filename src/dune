@@ -23,6 +23,8 @@
 
 
 ; The vendored libmammut.
+(data_only_dirs vendor)
+
 (rule
  (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a libsmartgauge.a libraplcap-msr.a)
  (deps (source_tree vendor))
@@ -46,8 +48,6 @@
    "cp vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
   )))
 
-(data_only_dirs vendor)
-
 ;;;;;;;;;;;;;;;;;;
 
 
@@ -62,7 +62,6 @@
  (name generate_types_start)
  (modules generate_types_start)
  (libraries ctypes.stubs generate_types))
-
 
 (rule
  (with-stdout-to mammut_c_types.c
@@ -96,7 +95,6 @@
  (name generate_c_functions)
  (modules generate_c_functions)
  (libraries ctypes.stubs mammut_stubs_description))
-
 
 (executable
  (name generate_ml_functions)
