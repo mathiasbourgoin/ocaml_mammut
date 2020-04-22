@@ -1,6 +1,6 @@
-[submodule "c/vendor/mammut"]
-	path = vendor/mammut
-	url = https://github.com/DanieleDeSensi/mammut.git
 [submodule "vendor/raplcap"]
 	path = vendor/raplcap
 	url = https://github.com/powercap/raplcap.git
+[submodule "vendor/mammut"]
+	path = vendor/mammut
+	url = https://github.com/mathiasbourgoin/mammut.git

@@ -30,14 +30,14 @@
     "cmake -B_build/shared -DBUILD_SHARED_LIBS=ON .")
    (bash
     "cmake --build _build/shared")))
-   (bash 
+   (bash
     "cp ../../vendor/raplcap/_build/shared/msr/libraplcap-msr.so dllraplcap-msr.so")
   (chdir ../../vendor/raplcap (progn
    (bash
     "cmake -B_build/static .")
    (bash
     "cmake --build _build/static")))
-   (bash 
+   (bash
     "cp ../../vendor/raplcap/_build/static/msr/libraplcap-msr.a .")
 )))
 
@@ -48,8 +48,8 @@
   (chdir ../../vendor/mammut (progn
    (bash
     "cmake .")
-   (ignore-outputs (bash
-    "make"))))
+   (bash
+    "make")))
   (bash
    "cp ../../vendor/mammut/src/libmammut_static.a libmammut.a")
   (bash
