@@ -92,7 +92,7 @@
   %{cc} %{c} \
   -I '%{lib:ctypes:.}' \
   -I %{ocaml_where} \
-  -I vendor/mammut/include -o %{targets}")))
+  -I ../../vendor/mammut/include -o %{targets}")))
 
 (rule
  (with-stdout-to mammut_types.ml
