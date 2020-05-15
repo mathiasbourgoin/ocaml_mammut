@@ -4,12 +4,13 @@
  (public_name mammut.generated)
  (wrapped false)
  (modules mammut_generated)
- (libraries ctypes mammut_stubs_description)
+ (libraries ctypes.stubs mammut_stubs_description)
  (foreign_stubs
   (language c)
   (names mammut_stubs)
   (include_dirs ../../vendor/mammut/include))
  (foreign_archives raplcap-msr mammut usb-1.0 smartgauge)
+ (c_library_flags -lstdc++)
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -68,7 +69,7 @@
  (name generate_types)
  (public_name mammut.generated_type_descriptions)
  (modules generate_types)
- (libraries ctypes))
+ (libraries ctypes.stubs))
 
 (executable
  (name generate_types_start)
@@ -101,7 +102,7 @@
  (flags (:standard -w -9-16-27))
  (wrapped false)
  (modules mammut_types mammut_stubs_description)
- (libraries ctypes generate_types))
+ (libraries ctypes.stubs generate_types))
 
 (executable
  (name generate_c_functions)

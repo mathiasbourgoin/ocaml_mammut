@@ -13,6 +13,7 @@ depends: [
   "dune" {> "2.5"}
   "conf-cmake"
   "ctypes"
+  "ctypes-foreign"
 ]
 build: [
   ["dune" "subst"] {pinned}

@@ -1,7 +1,8 @@
 (library
  (name mammut)
  (public_name mammut)
- (flags (:standard -w -49 -linkall -cclib -lstdc++ ))
+ (flags (:standard -w -49 -linkall))
  (modules mammut)
- (libraries ctypes ctypes.stubs mammut.generated threads)
+ (libraries ctypes.stubs mammut.generated threads)
+ (c_library_flags -lstdc++)
 )

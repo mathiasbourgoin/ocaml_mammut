@@ -18,5 +18,6 @@ d by means of sysfs files or CPU registries such as energy profiling or fine cor
   ("dune" (> 2.5))
   "conf-cmake"
   "ctypes"
+  "ctypes-foreign"
 ))
 
