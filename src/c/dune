@@ -1,7 +1,7 @@
 ; The final FFI module, containing all the OCaml bits, and linked with libmammut
 (library
  (name mammut_generated)
- (public_name mammut_generated)
+ (public_name mammut.generated)
  (wrapped false)
  (modules mammut_generated)
  (libraries ctypes mammut_stubs_description)
@@ -13,13 +13,6 @@
 )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-
-
-; The vendored libmammut.
-(data_only_dirs vendor)
 
 (rule
  (targets libraplcap-msr.a dllraplcap-msr%{ext_dll})
@@ -40,6 +33,9 @@
    (bash
     "cp ../../vendor/raplcap/_build/static/msr/libraplcap-msr.a .")
 )))
+
+; The vendored libmammut.
+(data_only_dirs vendor)
 
 (rule
  (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a  dllusb-1.0%{ext_dll} libsmartgauge.a dllsmartgauge%{ext_dll})
@@ -70,7 +66,7 @@
 ; Type bindings.
 (library
  (name generate_types)
- (public_name mammut_generated.type_descriptions)
+ (public_name mammut.generated_type_descriptions)
  (modules generate_types)
  (libraries ctypes))
 
@@ -101,7 +97,7 @@
 ; Function bindings.
 (library
  (name mammut_stubs_description)
- (public_name mammut_generated.function_descriptions)
+ (public_name mammut.generated_function_descriptions)
  (flags (:standard -w -9-16-27))
  (wrapped false)
  (modules mammut_types mammut_stubs_description)

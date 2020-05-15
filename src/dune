@@ -3,5 +3,5 @@
  (public_name mammut)
  (flags (:standard -w -49 -linkall -cclib -lstdc++ ))
  (modules mammut)
- (libraries ctypes ctypes.stubs mammut_generated threads)
+ (libraries ctypes ctypes.stubs mammut.generated threads)
 )
