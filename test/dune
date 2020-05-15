@@ -1,7 +1,8 @@
 (executable
  (name test)
  (flags (:standard -w -49 -cclib -lstdc++ -cclib -lraplcap-msr -cclib -lsmartgauge -cclib -lusb-1.0 -cclib -lmammut))
- (libraries mammut mammut_generated threads))
+ (libraries mammut mammut_generated threads)
+ (foreign_archives ../src/c/mammut ../src/c/usb-1.0 ../src/c/smartgauge ../src/c/raplcap-msr))
 
 
 (rule

@@ -1,0 +1,126 @@
+; The final FFI module, containing all the OCaml bits, and linked with libmammut
+(library
+ (name mammut_generated)
+ (public_name mammut_generated)
+ (wrapped false)
+ (modules mammut_generated)
+ (libraries ctypes mammut_stubs_description)
+ (foreign_stubs
+  (language c)
+  (names mammut_stubs)
+  (include_dirs ../../vendor/mammut/include))
+ (foreign_archives raplcap-msr mammut usb-1.0 smartgauge)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+
+
+; The vendored libmammut.
+(data_only_dirs vendor)
+
+(rule
+ (targets libraplcap-msr.a dllraplcap-msr%{ext_dll})
+ (deps (source_tree ../../vendor))
+ (action (progn
+  (chdir ../../vendor/raplcap (progn
+   (bash
+    "cmake -B_build/shared -DBUILD_SHARED_LIBS=ON .")
+   (bash
+    "cmake --build _build/shared")))
+   (bash
+    "cp ../../vendor/raplcap/_build/shared/msr/libraplcap-msr.so dllraplcap-msr.so")
+  (chdir ../../vendor/raplcap (progn
+   (bash
+    "cmake -B_build/static .")
+   (bash
+    "cmake --build _build/static")))
+   (bash
+    "cp ../../vendor/raplcap/_build/static/msr/libraplcap-msr.a .")
+)))
+
+(rule
+ (targets libmammut.a dllmammut%{ext_dll} libusb-1.0.a  dllusb-1.0%{ext_dll} libsmartgauge.a dllsmartgauge%{ext_dll})
+ (deps (source_tree ../../vendor))
+ (action (progn
+  (chdir ../../vendor/mammut (progn
+   (bash
+    "cmake .")
+   (bash
+    "make")))
+  (bash
+   "cp ../../vendor/mammut/src/libmammut_static.a libmammut.a")
+  (bash
+   "cp ../../vendor/mammut/src/libmammut.so dllmammut.so")
+  (bash
+   "cp ../../vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.a .")
+  (bash
+   "cp ../../vendor/mammut/src/external/libusb-1.0.9/libusb/.libs/libusb-1.0.so dllusb-1.0.so")
+  (bash
+   "cp ../../vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.a .")
+  (bash
+   "cp ../../vendor/mammut/src/external/odroid-smartpower-linux/libsmartgauge.so dllsmartgauge.so")
+  )))
+
+;;;;;;;;;;;;;;;;;;
+
+
+; Type bindings.
+(library
+ (name generate_types)
+ (public_name mammut_generated.type_descriptions)
+ (modules generate_types)
+ (libraries ctypes))
+
+(executable
+ (name generate_types_start)
+ (modules generate_types_start)
+ (libraries ctypes.stubs generate_types))
+
+(rule
+ (with-stdout-to mammut_generated.types.c
+  (run ./generate_types_start.exe)))
+
+; Based partially on
+;   https://github.com/avsm/ocaml-yaml/blob/master/types/stubgen/jbuild#L20
+(rule
+ (targets mammut_types.exe)
+ (deps (:c mammut_generated.types.c))
+ (action (bash "\
+  %{cc} %{c} \
+  -I '%{lib:ctypes:.}' \
+  -I %{ocaml_where} \
+  -I ../../vendor/mammut/include -o %{targets}")))
+
+(rule
+ (with-stdout-to mammut_types.ml
+  (run ./mammut_types.exe)))
+
+; Function bindings.
+(library
+ (name mammut_stubs_description)
+ (public_name mammut_generated.function_descriptions)
+ (flags (:standard -w -9-16-27))
+ (wrapped false)
+ (modules mammut_types mammut_stubs_description)
+ (libraries ctypes generate_types))
+
+(executable
+ (name generate_c_functions)
+ (modules generate_c_functions)
+ (libraries ctypes.stubs mammut_stubs_description))
+
+(executable
+ (name generate_ml_functions)
+ (modules generate_ml_functions)
+ (libraries ctypes.stubs mammut_stubs_description))
+
+(rule
+ (with-stdout-to mammut_generated.ml
+  (run ./generate_ml_functions.exe)))
+
+(rule
+ (with-stdout-to mammut_stubs.c
+  (run ./generate_c_functions.exe)))
